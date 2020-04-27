@@ -1,19 +1,48 @@
 server:
   port: 9005
 
-
-#指定注册中心地址
-eureka:
-  instance:
-    hostname: 106.54.75.24
-    prefer-ip-address: true
-    instance-id: ${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名
-    ip-address: 121.199.28.140
-  client:
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:9000/eureka/
-
 #服务的名称
 spring:
   application:
-    name: temppark-service
+    name: account-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    # 当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://121.199.28.140:3306/BS_XIANGLEI?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+  session:
+    ## Spring Session配置
+    store-type: redis
+    timeout: PT30M
+  redis:
+    host: 121.199.28.140
+    port: 6379
+    password:
+    timeout: PT30M
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.26.184.125:8848
+        port: 9005
+        ip: 39.105.82.150
+# 日志打印
+logging:
+  path: /data/logs/${spring.application.name}
+rocketmq:
+  name-server: 120.26.184.125:9876
+  producer:
+    group: order-group
+mybatis:
+  type-aliases-package: com.xianglei.account_service.domain
