@@ -94,8 +94,8 @@ public class AccountServiceImpl implements AccountService {
         int result = 0;
         BsPark park = parkMapper.selectById(parkId);
         park.setbPrice(bPrice);
-        park.setbPrice(yPrice);
-        park.setbPrice(vPrice);
+        park.setyPrice(yPrice);
+        park.setvPrice(vPrice);
         result = parkMapper.updateById(park);
         return result;
     }
