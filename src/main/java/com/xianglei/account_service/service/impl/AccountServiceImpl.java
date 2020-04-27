@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
     ParkMapper parkMapper;
 
     @Override
-    public Double getPriceById(String orderId) throws RuntimeException{
+    public Double getPriceById(String orderId) throws RuntimeException {
         Double result = 0.0;
         // 查询订单是否存在
         BsOrder bsOrder = orderMapper.selectById(orderId);
@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Double computePrice(BsOrder bsOrder) throws RuntimeException{
+    public Double computePrice(BsOrder bsOrder) throws RuntimeException {
         Double price = new Double(18.0);
         String userId = bsOrder.getUserId();
         BsUser user = userMapper.selectOne(new QueryWrapper<BsUser>().eq("FLOW_ID", userId));
@@ -60,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Double computePriceCount(BsOrder bsOrder, String vip)throws RuntimeException {
+    public Double computePriceCount(BsOrder bsOrder, String vip) throws RuntimeException {
         BsPark park = parkMapper.selectOne(new QueryWrapper<BsPark>().eq("FLOW_ID", bsOrder.getParkId()));
         // 1 或者 null 是非会员
         if (vip == null || vip.equals("1")) {
@@ -89,5 +89,20 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
+    public int updateParkPrice(Double bPrice, Double yPrice, Double vPrice, String parkId) {
+        int result = 0;
+        BsPark park = parkMapper.selectById(parkId);
+        park.setbPrice(bPrice);
+        park.setbPrice(yPrice);
+        park.setbPrice(vPrice);
+        result = parkMapper.updateById(park);
+        return result;
+    }
 
+    @Override
+    public BsPark queryParkPrice(String parkId) {
+        BsPark park = parkMapper.selectById(parkId);
+        return park;
+    }
 }
