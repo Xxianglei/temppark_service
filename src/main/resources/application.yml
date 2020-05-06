@@ -36,7 +36,7 @@ spring:
       discovery:
         server-addr: 120.26.184.125:8848
         port: 9005
-        ip: 121.199.28.140
+        ip: 106.54.75.24
 # 日志打印
 logging:
   path: /data/logs/${spring.application.name}
