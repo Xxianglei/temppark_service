@@ -36,7 +36,7 @@ spring:
       discovery:
         server-addr: 120.26.184.125:8848
         port: 9005
-        ip: 106.54.75.24
+        ip: 39.105.82.150
 # 日志打印
 logging:
   path: /data/logs/${spring.application.name}
@@ -46,3 +46,11 @@ rocketmq:
     group: order-group
 mybatis:
   type-aliases-package: com.xianglei.account_service.domain
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
