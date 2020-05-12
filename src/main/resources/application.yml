@@ -54,3 +54,5 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+    logfile:
+      external-file: /data/logs/${spring.application.name}

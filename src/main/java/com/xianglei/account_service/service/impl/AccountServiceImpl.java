@@ -61,6 +61,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Double computePriceCount(BsOrder bsOrder, String vip) throws RuntimeException {
+        // 获取时长 计算价格
+        Date startTime = bsOrder.getStartTime();
+        Date leaveTime = bsOrder.getLeaveTime();
+        long startTimeTime = startTime.getTime();
+        long leaveTimeTime = leaveTime.getTime();
+        long howLong=leaveTimeTime-startTimeTime;
+        long mill=howLong/1000/60;
+        Double hourDouble = new Double(mill);
+        // 多少小时
+        hourDouble=hourDouble/60;
         BsPark park = parkMapper.selectOne(new QueryWrapper<BsPark>().eq("FLOW_ID", bsOrder.getParkId()));
         // 1 或者 null 是非会员
         if (vip == null || vip.equals("1")) {
@@ -68,9 +78,9 @@ public class AccountServiceImpl implements AccountService {
             Double aDouble;
             String evening = bsOrder.getEvening();
             if (evening == null || evening.equals("1")) {
-                aDouble = park.getyPrice();
+                aDouble = park.getyPrice()*hourDouble;
             } else {
-                aDouble = park.getbPrice();
+                aDouble = park.getbPrice()*hourDouble;
             }
             return aDouble;
         } else {
@@ -79,9 +89,9 @@ public class AccountServiceImpl implements AccountService {
             Double zhekou = park.getvPrice();
             String evening = bsOrder.getEvening();
             if (evening == null || evening.equals("1")) {
-                aDouble = park.getyPrice();
+                aDouble = park.getyPrice()*hourDouble;
             } else {
-                aDouble = park.getbPrice();
+                aDouble = park.getbPrice()*hourDouble;
             }
             // 打折后价格
             aDouble = aDouble * zhekou;
