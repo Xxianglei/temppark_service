@@ -40,6 +40,7 @@ spring:
 # 日志打印
 logging:
   path: /data/logs/${spring.application.name}
+  file: /data/admin-logs/output.log
 rocketmq:
   name-server: 120.26.184.125:9876
   producer:
@@ -55,4 +56,4 @@ management:
     health:
       show-details: ALWAYS
     logfile:
-      external-file: /data/logs/${spring.application.name}
+      external-file: /data/admin-logs/output.log
